@@ -386,15 +386,6 @@ Return<void> Power::powerHintAsync_1_3(PowerHint_1_3 hint, int32_t data) {
         return Void();
     }
 
-    switch (static_cast<LineagePowerHint>(hint)) {
-        case LineagePowerHint::SET_PROFILE:
-            setProfile(static_cast<PowerProfile>(data));
-            mCurrentPerfProfile = static_cast<PowerProfile>(data);
-            return Void();
-        default:
-            break;
-    }
-
     if (hint == PowerHint_1_3::EXPENSIVE_RENDERING) {
         ATRACE_INT(android::hardware::power::V1_3::toString(hint).c_str(), data);
         if (mVRModeOn || mSustainedPerfModeOn) {
@@ -410,16 +401,6 @@ Return<void> Power::powerHintAsync_1_3(PowerHint_1_3 hint, int32_t data) {
         return powerHintAsync_1_2(static_cast<PowerHint_1_2>(hint), data);
     }
     return Void();
-}
-
-// Methods from ::vendor::lineage::power::V1_0::ILineagePower follow.
-Return<int32_t> Power::getFeature(LineageFeature feature) {
-    switch (feature) {
-        case LineageFeature::SUPPORTED_PROFILES:
-            return mNumPerfProfiles;
-        default:
-            return -1;
-    }
 }
 
 constexpr const char *boolToString(bool b) {

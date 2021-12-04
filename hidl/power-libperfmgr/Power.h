@@ -28,8 +28,6 @@
 
 #include "InteractionHandler.h"
 
-#include <vendor/lineage/power/1.0/ILineagePower.h>
-
 namespace android {
 namespace hardware {
 namespace power {
@@ -46,10 +44,6 @@ using PowerHint_1_2 = ::android::hardware::power::V1_2::PowerHint;
 using PowerHint_1_3 = ::android::hardware::power::V1_3::PowerHint;
 using ::android::perfmgr::HintManager;
 
-using ::vendor::lineage::power::V1_0::ILineagePower;
-using ::vendor::lineage::power::V1_0::LineageFeature;
-using ::vendor::lineage::power::V1_0::LineagePowerHint;
-
 enum PowerProfile {
     POWER_SAVE = 0,
     BALANCED,
@@ -59,7 +53,7 @@ enum PowerProfile {
     MAX
 };
 
-class Power : public IPower, public ILineagePower {
+class Power : public IPower {
   public:
     // Methods from ::android::hardware::power::V1_0::IPower follow.
 
@@ -79,9 +73,6 @@ class Power : public IPower, public ILineagePower {
 
     // Methods from ::android::hardware::power::V1_3::IPower follow.
     Return<void> powerHintAsync_1_3(PowerHint_1_3 hint, int32_t data) override;
-
-    // Methods from ::vendor::lineage::power::V1_0::ILineagePower follow.
-    Return<int32_t> getFeature(LineageFeature feature) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
     Return<void> debug(const hidl_handle &fd, const hidl_vec<hidl_string> &args) override;
